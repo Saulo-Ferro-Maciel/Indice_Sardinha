@@ -1,0 +1,2 @@
+preco_mediano_lata_sardinha = 5,00
+preco_ida_e_volta_passagem  = 8,40

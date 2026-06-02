@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Índice Sardinha — Paridade de Poder de Compra</title>
+  <meta name="description" content="Calculadora de Paridade de Poder de Compra baseada no preço da sardinha enlatada. Por Saulo Ferro Maciel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/css/styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <p class="eyebrow">paridade de poder de compra · maranhão · brasil</p>
+      <h1 class="site-title"><span class="accent">Índice</span> Sardinha</h1>
+      <p class="site-sub">por Saulo Ferro Maciel &nbsp;·&nbsp; USL — Unidade de Sardinha em Lata</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- TABS -->
+    <div class="tabs-nav" role="tablist" aria-label="Navegação principal">
+      <button class="tab-btn active" id="tab-calc" role="tab" aria-selected="true" aria-controls="panel-calc">Calculadora</button>
+      <button class="tab-btn" id="tab-formulas" role="tab" aria-selected="false" aria-controls="panel-formulas">Fórmulas</button>
+    </div>
+
+
+    <!-- PANEL: CALCULADORA -->
+    <div id="panel-calc" role="tabpanel" aria-labelledby="tab-calc">
+
+      <!-- CALCULADORA -->
+      <section class="calc-grid" aria-label="Calculadora de paridade">
+        <div class="card" id="card-sardinha">
+          <span class="tag tag-teal">âncora</span>
+          <label class="field-label" for="v-sardinha">Valor da lata de sardinha</label>
+          <div class="input-wrap" id="wrap-sardinha">
+            <span class="currency">R$</span>
+            <input
+              type="number"
+              id="v-sardinha"
+              value="5.00"
+              min="0.01"
+              step="0.01"
+              inputmode="decimal"
+              autocomplete="off"
+              aria-describedby="hint-sardinha err-sardinha"
+            />
+          </div>
+          <p class="field-hint" id="hint-sardinha">lata de sardinha em conserva</p>
+          <p class="field-err" id="err-sardinha" role="alert" aria-live="polite"></p>
+        </div>
+
+        <div class="card" id="card-produto">
+          <span class="tag tag-amber">produto / serviço</span>
+          <label class="field-label" for="v-produto">Valor do produto ou serviço</label>
+          <div class="input-wrap" id="wrap-produto">
+            <span class="currency">R$</span>
+            <input
+              type="number"
+              id="v-produto"
+              value="8.40"
+              min="0"
+              step="0.01"
+              inputmode="decimal"
+              autocomplete="off"
+              aria-describedby="hint-produto err-produto"
+            />
+          </div>
+          <p class="field-hint" id="hint-produto">passagem ida e volta · são luís — maranhão</p>
+          <p class="field-err" id="err-produto" role="alert" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- RESULTADO PRINCIPAL -->
+      <section class="result-card" aria-label="Resultado da paridade">
+        <p class="result-label">paridade em unidades de sardinha em lata</p>
+        <p class="result-big" id="r-usl" aria-live="polite">1,68</p>
+        <p class="result-unit">USL &nbsp;·&nbsp; Unidades de Sardinha em Lata</p>
+        <div class="cans-row" id="cans-row" aria-hidden="true"></div>
+        <p class="cans-obs" id="cans-obs" aria-live="polite"></p>
+      </section>
+
+      <!-- FÓRMULA APLICADA -->
+      <p class="section-label">fórmula aplicada</p>
+      <div class="formula-row" aria-label="Decomposição da fórmula">
+        <div class="formula-cell">
+          <p class="fc-label">produto (R$)</p>
+          <p class="fc-val" id="f-prod">8,40</p>
+        </div>
+        <span class="op" aria-label="dividido por"><span class="op-symbol">÷</span></span>
+        <div class="formula-cell">
+          <p class="fc-label">sardinha (R$)</p>
+          <p class="fc-val" id="f-sard">5,00</p>
+        </div>
+        <span class="op" aria-label="igual a"><span class="op-symbol">=</span></span>
+        <div class="formula-cell accent">
+          <p class="fc-label">paridade USL</p>
+          <p class="fc-val" id="f-res">1,68</p>
+        </div>
+      </div>
+
+      <!-- PAINEL A SARDINHA DE AMANHÃ -->
+      <section class="amanha-card" aria-label="A sardinha de amanhã">
+        <div class="amanha-header">
+          <div class="amanha-icon" aria-hidden="true">🐟</div>
+          <div>
+            <h2 class="amanha-title">A sardinha de amanhã</h2>
+            <p class="amanha-sub">quanto custa sair de casa para trabalhar</p>
+          </div>
+        </div>
+
+        <div class="verdict-box" aria-live="polite">
+          <p class="verdict-num" id="v-dias">3</p>
+          <p class="verdict-text" id="v-texto">dias para o trabalhador<br>repor o valor de uma sardinha</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-block">
+            <p class="sb-label">latas necessárias<br>por dia</p>
+            <p class="sb-val" id="a-teto">2</p>
+            <p class="sb-sub" id="a-teto-reais">R$ 10,00</p>
+          </div>
+          <div class="stat-block highlight">
+            <p class="sb-label">sobra diária<br>(troco)</p>
+            <p class="sb-val" id="a-sobra">R$ 1,60</p>
+            <p class="sb-sub" id="a-sobra-usl">0,32 USL/dia</p>
+          </div>
+          <div class="stat-block">
+            <p class="sb-label">custo semanal<br>(5 dias úteis)</p>
+            <p class="sb-val" id="a-sem">8,40</p>
+            <p class="sb-sub">USL / semana</p>
+          </div>
+          <div class="stat-block">
+            <p class="sb-label">custo mensal<br>(22 dias úteis)</p>
+            <p class="sb-val" id="a-mes">36,96</p>
+            <p class="sb-sub">USL / mês</p>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <p class="progress-label" id="bar-label">troco acumula 1 sardinha extra em 3,1 dias úteis</p>
+          <div class="progress-track" role="progressbar" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100" id="progress-bar-wrap">
+            <div class="progress-fill" id="bar-fill" style="width: 32%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIMELINE DIA A DIA -->
+      <p class="section-label">acumulação dia a dia</p>
+      <div class="timeline-card" aria-label="Acumulação diária de USL">
+        <div id="timeline-rows"></div>
+      </div>
+
+    </div><!-- /panel-calc -->
+
+    <!-- PANEL: FÓRMULAS -->
+    <div id="panel-formulas" role="tabpanel" aria-labelledby="tab-formulas" hidden>
+
+      <p class="section-label">metodologia econômica</p>
+
+      <div class="formula-sheet">
+
+        <!-- CENÁRIO BASE -->
+        <div class="fsheet-card">
+          <div class="fsheet-header">
+            <span class="fsheet-icon">📌</span>
+            <div>
+              <p class="fsheet-title">Cenário Âncora — São Luís / MA</p>
+              <p class="fsheet-sub">Valores de referência do índice base</p>
+            </div>
+          </div>
+          <div class="fsheet-grid">
+            <div class="fsheet-stat">
+              <p class="fss-label">lata de sardinha</p>
+              <p class="fss-val">R$ 5,00</p>
+            </div>
+            <div class="fsheet-stat">
+              <p class="fss-label">passagem unitária</p>
+              <p class="fss-val">R$ 4,20</p>
+            </div>
+            <div class="fsheet-stat">
+              <p class="fss-label">ida e volta / dia</p>
+              <p class="fss-val">R$ 8,40</p>
+            </div>
+            <div class="fsheet-stat accent-green">
+              <p class="fss-label">paridade da jornada</p>
+              <p class="fss-val">1,68 USL</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FÓRMULA PRINCIPAL -->
+        <div class="fsheet-card">
+          <div class="fsheet-header">
+            <span class="fsheet-icon">🧮</span>
+            <div>
+              <p class="fsheet-title">Fórmula Universal do Índice</p>
+              <p class="fsheet-sub">Conversão de qualquer valor em USL</p>
+            </div>
+          </div>
+          <div class="fsheet-eq-list">
+            <div class="fsheet-eq">
+              <p class="feq-name">Paridade</p>
+              <div class="feq-expr">
+                <span class="feq-var">USL</span>
+                <span class="feq-op">=</span>
+                <div class="feq-frac">
+                  <span class="feq-num">Valor do Produto</span>
+                  <span class="feq-den">Preço da Lata</span>
+                </div>
+              </div>
+            </div>
+            <div class="fsheet-eq">
+              <p class="feq-name">Sobra Diária</p>
+              <div class="feq-expr">
+                <span class="feq-var">Sobra<sub>R$</sub></span>
+                <span class="feq-op">=</span>
+                <div class="feq-frac">
+                  <span class="feq-num">⌈USL⌉ × Preço da Lata − Custo de Transporte</span>
+                  <span class="feq-den">1</span>
+                </div>
+              </div>
+            </div>
+            <div class="fsheet-eq">
+              <p class="feq-name">Dias p/ 1 USL extra</p>
+              <div class="feq-expr">
+                <span class="feq-var">Dias</span>
+                <span class="feq-op">=</span>
+                <div class="feq-frac">
+                  <span class="feq-num">Preço da Lata</span>
+                  <span class="feq-den">Sobra Diária (R$)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACUMULAÇÃO DIA A DIA -->
+        <div class="fsheet-card">
+          <div class="fsheet-header">
+            <span class="fsheet-icon">📅</span>
+            <div>
+              <p class="fsheet-title">Lógica de Acumulação ("A Lata de Amanhã")</p>
+              <p class="fsheet-sub">Troco diário acumulado em USL — cenário base R$ 5,00 / R$ 8,40</p>
+            </div>
+          </div>
+          <div class="fsheet-timeline">
+            <div class="fst-row">
+              <span class="fst-day">Dia 1</span>
+              <div class="fst-bar-wrap"><div class="fst-bar" style="width:32%"></div></div>
+              <span class="fst-usl">0,32 USL</span>
+            </div>
+            <div class="fst-row">
+              <span class="fst-day">Dia 2</span>
+              <div class="fst-bar-wrap"><div class="fst-bar" style="width:64%"></div></div>
+              <span class="fst-usl">0,64 USL</span>
+            </div>
+            <div class="fst-row">
+              <span class="fst-day">Dia 3</span>
+              <div class="fst-bar-wrap"><div class="fst-bar" style="width:96%"></div></div>
+              <span class="fst-usl">0,96 USL</span>
+            </div>
+            <div class="fst-row">
+              <span class="fst-day">Dia 4</span>
+              <div class="fst-bar-wrap"><div class="fst-bar fst-bar-full" style="width:100%"></div></div>
+              <span class="fst-usl fst-usl-full">1,28 USL ★</span>
+            </div>
+            <div class="fst-row">
+              <span class="fst-day">Dia 5</span>
+              <div class="fst-bar-wrap"><div class="fst-bar fst-bar-full" style="width:100%"></div></div>
+              <span class="fst-usl fst-usl-full">1,60 USL ★</span>
+            </div>
+          </div>
+          <p class="fsheet-note">A cada <strong>3,125 dias úteis</strong> o trabalhador acumula o troco equivalente a <strong>1 lata extra</strong>.</p>
+        </div>
+
+        <!-- CUSTO SEMANAL / MENSAL -->
+        <div class="fsheet-card">
+          <div class="fsheet-header">
+            <span class="fsheet-icon">💰</span>
+            <div>
+              <p class="fsheet-title">Custo de Mobilidade em USL</p>
+              <p class="fsheet-sub">Impacto do transporte na renda real</p>
+            </div>
+          </div>
+          <div class="fsheet-grid">
+            <div class="fsheet-stat accent-amber">
+              <p class="fss-label">custo / dia</p>
+              <p class="fss-val">1,68 USL</p>
+              <p class="fss-sub">R$ 8,40</p>
+            </div>
+            <div class="fsheet-stat">
+              <p class="fss-label">semanal (5 dias)</p>
+              <p class="fss-val">8,40 USL</p>
+              <p class="fss-sub">R$ 42,00</p>
+            </div>
+            <div class="fsheet-stat">
+              <p class="fss-label">mensal (22 dias)</p>
+              <p class="fss-val">36,96 USL</p>
+              <p class="fss-sub">R$ 184,80</p>
+            </div>
+            <div class="fsheet-stat">
+              <p class="fss-label">sobra / dia</p>
+              <p class="fss-val">0,32 USL</p>
+              <p class="fss-sub">R$ 1,60</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /formula-sheet -->
+
+    </div><!-- /panel-formulas -->
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Índice Sardinha &nbsp;·&nbsp; Saulo Ferro Maciel &nbsp;·&nbsp; Maio 2026 &nbsp;·&nbsp; São Luís — Maranhão</p>
+      <p class="footer-formula">USL = Valor ÷ Preço da Lata &nbsp;|&nbsp; Sobra = (⌈USL⌉ × Lata) − Transporte &nbsp;|&nbsp; Dias = Lata ÷ Sobra</p>
+    </div>
+  </footer>
+
+  <script src="src/js/main.js"></script>
+</body>
+</html>

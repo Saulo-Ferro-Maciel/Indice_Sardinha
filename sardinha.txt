@@ -1,0 +1,143 @@
+===============================================================================
+                       DOCUMENTO DE ESCOPO: ÍNDICE SARDINHA
+===============================================================================
+Autor: Saulo Ferro Maciel
+Data: Maio de 2026
+Objetivo: Criar um índice de Paridade de Poder de Compra (PPC) baseado no preço
+          da sardinha em lata, utilizando o custo de transporte urbano diário 
+          (ida e volta) como âncora principal de comparação econômica.
+
+-------------------------------------------------------------------------------
+1. METODOLOGIA ECONÔMICA E LÓGICA DE PARIDADE
+-------------------------------------------------------------------------------
+O índice mede o custo de vida real convertendo o valor de produtos e serviços 
+em "Unidades de Sardinha em Lata" (USL). 
+
+Cenário Âncora Principal (São Luís - MA):
+- Preço de Referência da Lata de Sardinha: R$ 5,00
+- Preço da Passagem de Ônibus (Unitária): R$ 4,20
+- Custo da Jornada Diária (Ida e Volta): R$ 8,40
+
+Equivalência Matemática do Cenário Base:
+- 2 Latas de Sardinha = R$ 10,00
+- Custo de Transporte  = R$ 8,40
+- Saldo / Sobra        = R$ 1,60 (ou 0,32 USL)
+- Paridade da Jornada  = 1,68 Unidades de Sardinha em Lata (USL) por dia de transporte.
+
+Lógica do Dia de Trabalho e Acumulação ("A Lata de Amanhã"):
+O ponto central do índice não é apenas a paridade estática de 1,68 USL.
+É o que sobra depois de pagar o transporte que revela a qualidade de vida real.
+
+Para ir e voltar do trabalho por 1 dia, o trabalhador precisa de 2 latas de
+sardinha (R$ 10,00), mas gasta apenas R$ 8,40. O troco — R$ 1,60 — equivale
+a 0,32 USL, ou seja, 32% do caminho para a próxima lata.
+
+Interpretação dia a dia:
+  Dia 1:  gasta R$ 8,40 → sobra R$ 1,60 → saldo acumulado: 0,32 USL
+  Dia 2:  gasta R$ 8,40 → sobra R$ 1,60 → saldo acumulado: 0,64 USL
+  Dia 3:  gasta R$ 8,40 → sobra R$ 1,60 → saldo acumulado: 0,96 USL
+  Dia 4:  gasta R$ 8,40 → sobra R$ 1,60 → saldo acumulado: 1,28 USL
+  Dia 5:  gasta R$ 8,40 → sobra R$ 1,60 → saldo acumulado: 1,60 USL
+          *** A lata de amanhã está paga após 4 dias de acumulação do troco ***
+
+  Regra geral de acumulação:
+  Dias necessários para poupar 1 USL extra = R$ 5,00 / R$ 1,60 = 3,125 dias
+  Ou seja: a cada 3 dias úteis, o trabalhador acumula o equivalente a 1 lata.
+
+  Custo semanal de transporte (5 dias úteis):
+  5 × R$ 8,40 = R$ 42,00 = 8,40 USL por semana de trabalho.
+
+  Custo mensal de transporte (22 dias úteis):
+  22 × R$ 8,40 = R$ 184,80 = 36,96 USL por mês de trabalho.
+
+Esta lógica evidencia que o custo de mobilidade urbana, quando expresso em USL,
+consome uma fatia mensurável e pesada da renda do trabalhador de baixa renda —
+especialmente em cidades onde o salário mínimo representa apenas algumas dezenas
+de latas de sardinha por mês.
+
+Fórmula Universal do Índice:
+Paridade (USL)      = Valor do Produto ou Serviço / Valor da Lata de Sardinha
+Sobra Diária (USL)  = (Teto de Latas × Preço da Lata - Custo de Transporte) / Preço da Lata
+Dias p/ 1 USL extra = Preço da Lata / Sobra Diária em Reais
+
+-------------------------------------------------------------------------------
+2. ARQUITETURA DE DADOS E REPOSITÓRIOS PÚBLICOS E NACIONAIS (APIs)
+-------------------------------------------------------------------------------
+Para alimentar e automatizar este índice de forma transparente com preços reais, 
+as seguintes fontes oficiais brasileiras de dados abertos e repositórios podem ser integradas:
+
+A. API de Compras do Governo Federal (Compras.gov.br)
+   - Permite consultar as atas de registro de preços e o catálogo unificado de materiais do Governo Federal. Útil para extrair o custo do item "sardinha em conserva" em compras públicas nacionais.
+   - Documentação: https://www.gov.br/compras/pt-br/acesso-a-informacao/manuais/manual-dados-abertos/manual-api-compras.pdf
+
+B. API do Portal Nacional de Contratações Públicas (PNCP)
+   - Disponibiliza repositórios de dados abertos sobre contratos e notas fiscais de compras de órgãos federais, estaduais e municipais de todo o Brasil.
+   - Portal Oficial: https://www.gov.br/pncp/pt-br/acesso-a-informacao/dados-abertos
+
+
+C. Sistema SIDRA (IBGE)
+   - Fornece as séries históricas do IPCA/INPC do subgrupo específico "Pescados Enlatados" ou "Alimentação e Bebidas" em nível nacional e metropolitano (SLZ).
+   - API de Metadados: https://ibge.gov.br
+
+D. Open Food Facts Brasil (Dados Abertos Colaborativos)
+   - Repositório de dados abertos focado em produtos de supermercado. Permite puxar via API informações técnicas e códigos de barras (EAN) das marcas de sardinha do mercado brasileiro.
+   - API de Produtos: https://br.openfoodfacts.org/
+
+-------------------------------------------------------------------------------
+3. ARQUITETURA DO PROJETO WEB
+-------------------------------------------------------------------------------
+Estrutura de Pastas Padronizada:
+├── index.html
+└── src/
+    ├── css/
+    │   └── styles.css
+    ├── js/
+    │   └── main.js
+    └── img/
+
+Diretrizes de Layout:
+- Tela dividida em duas colunas principais para a calculadora.
+- Lado Esquerdo: Input e controle do Valor da Lata de Sardinha (Base: R$ 5,00).
+- Lado Direito: Input e controle do Valor do Produto a ser comparado.
+- Centro/Resultado Principal: Exibição proeminente do valor convertido em "USL".
+- Painel Secundário "A Lata de Amanhã": exibir abaixo do resultado principal
+  um bloco calculado automaticamente mostrando:
+    · Sobra diária em reais e em USL (ex: R$ 1,60 = 0,32 USL/dia)
+    · Quantos dias de trabalho são necessários para acumular 1 USL extra
+    · Custo semanal em USL (5 dias úteis)
+    · Custo mensal em USL (22 dias úteis)
+  Este painel deve atualizar em tempo real junto com os demais campos.
+
+===============================================================================
+PROMPT PARA GERAÇÃO DA WEB-PAGE DA CALCULADORA (COPIE O TEXTO ABAIXO)
+===============================================================================
+Exma. IA, atue como um desenvolvedor web sênior e especialista em segurança da informação (AppSec). Crie uma página web para o "Índice Sardinha", uma calculadora de Paridade de Poder de Compra baseada no preço da sardinha enlatada projetada por Saulo Ferro Maciel. 
+
+Siga estritamente os requisitos abaixo:
+
+1. ESTRUTURA DE ARQUIVOS: O projeto deve seguir rigidamente a planificação simples: `index.html`, `src/css/styles.css`, `src/js/main.js` e uma pasta vazia `src/img/`. Forneça o código limpo e separado para cada um desses arquivos.
+
+2. SEGURANÇA E HIGIENIZAÇÃO (ANTI-INJECTION): O código JavaScript deve ser totalmente seguro contra ataques de Cross-Site Scripting (XSS) e HTML Injection. Todos os inputs numéricos vindos do usuário devem ser validados via regex, convertidos estritamente para ponto flutuante usando `parseFloat()` e, ao renderizar qualquer valor na tela, use obrigatoriamente `textContent` ou manipulação segura de nós do DOM. Nunca utilize `innerHTML` diretamente com variáveis inseridas pelo usuário.
+
+3. LAYOUT E DESIGN (MULTIPLATAFORMA): O design deve ser moderno, limpo, responsivo (mobile-friendly) e visualmente leve. Use um layout de duas colunas nas telas de desktop:
+   - Do LADO ESQUERDO da tela, deve ficar o contêiner de entrada do "Valor da Lata de Sardinha".
+   - Do LADO DIREITO da tela, deve ficar o contêiner de entrada do "Valor do Produto ou Serviço".
+   - Abaixo ou entre as colunas, exiba o card de resultado contendo a conversão exata do produto em "X unidades de USL (Unidade de Sardinha em Lata)".
+
+4. COMPORTAMENTO E EXEMPLO PADRÃO: Ao carregar a página pela primeira vez, os campos já devem vir preenchidos automaticamente com o exemplo principal discutido:
+   - Valor da Lata de Sardinha: R$ 5,00
+   - Valor do Produto/Serviço: R$ 8,40 (com um rótulo indicando explicitamente que este valor representa a 'Passagem de Ônibus de Ida e Volta em São Luís').
+   - O resultado da paridade (1,68 USL) deve ser calculado e exibido de forma imediata na inicialização, atualizando-se instantaneamente via eventos de escuta (input listeners) sempre que o usuário alterar qualquer um dos dois valores.
+
+5. PAINEL "A LATA DE AMANHÃ" (LÓGICA DE ACUMULAÇÃO DIÁRIA): Abaixo do card
+   de resultado principal, inclua um segundo painel calculado automaticamente
+   que exiba a lógica de acumulação do troco diário. A lógica é a seguinte:
+   - O trabalhador precisa de 2 latas para cobrir o dia (teto = ceil(USL) latas).
+   - A sobra em reais é: (teto × preço_sardinha) - custo_transporte.
+   - A sobra em USL por dia é: sobra_reais / preço_sardinha.
+   - Dias necessários para acumular 1 USL extra: preço_sardinha / sobra_reais.
+   - Custo semanal (5 dias úteis) em USL: USL × 5.
+   - Custo mensal (22 dias úteis) em USL: USL × 22.
+   O painel deve exibir todos esses valores com rótulos claros e atualizar em
+   tempo real junto com os inputs. Utilize apenas textContent para renderização,
+   mantendo o mesmo padrão de segurança anti-XSS do restante do código.
